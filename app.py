@@ -29,7 +29,8 @@ Fare = st.number_input("Ticket Fare", min_value=0.0, max_value=600.0, value=50.0
 Embarked = st.selectbox("Port of Embarkation", ["S", "C", "Q"])
 
 # --- Prepare input for model ---
-input_df = pd.DataFrame([{
+# --- Prepare input for model ---
+input_dict = {
     "Pclass": Pclass,
     "Sex": 0 if Sex == "male" else 1,
     "Age": Age,
@@ -37,7 +38,12 @@ input_df = pd.DataFrame([{
     "Parch": Parch,
     "Fare": Fare,
     "Embarked": {"S": 0, "C": 1, "Q": 2}[Embarked]
-}])
+}
+
+input_df = pd.DataFrame([input_dict])
+
+# ✅ Align columns with training data
+input_df = input_df.reindex(columns=expected_cols)
 
 # --- Predict ---
 if st.button("🚀 Predict Survival"):
