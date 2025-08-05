@@ -11,8 +11,10 @@ st.subheader("🧍 Enter Passenger Details")
 MODEL_PATH = "model.pkl"
 
 if os.path.exists(MODEL_PATH):
-    with open(MODEL_PATH, "rb") as f:
-        model = pickle.load(f)
+   with open("model.pkl", "rb") as f:
+    model_data = pickle.load(f)
+    model = model_data["model"]
+    expected_cols = model_data["columns"]
 else:
     st.error("❌ Model file not found. Please make sure 'model.pkl' is in the same folder as app.py.")
     st.stop()
